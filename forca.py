@@ -1,15 +1,18 @@
-import random;
+import random;#randomizer para escolher uma palavra aleatoria de "palavras.txt"
 
+#inicializa
 def abertura():
     print("*********************************");
     print("***Bem vindo ao jogo da Forca!***");
     print("*********************************");
 
+#pede uma letra
 def pede_chute():
     chute = input("Qual letra? ");
     chute = chute.strip().upper();
     return chute;
 
+#se acertar marca a letra pro usuário ver
 def marca_chute(chute, letras_acertadas, palavra_secreta):
     index = 0;
     for letra in palavra_secreta:
@@ -17,7 +20,8 @@ def marca_chute(chute, letras_acertadas, palavra_secreta):
             letras_acertadas[index] = letra;
         index += 1;
 
-def carrega_palavra_secreta():
+#inicializa uma palavra secreta
+def carrega_palavra():
     arquivo = open("Forca/palavras.txt", "r");
     palavras = [];
     for linha in arquivo:
@@ -26,9 +30,9 @@ def carrega_palavra_secreta():
     arquivo.close();
     numero = random.randrange(0, len(palavras));
     palavra_secreta = palavras[numero].upper();
-    print(palavra_secreta)
     return palavra_secreta;
 
+#desenha a forca de acordo com os erros
 def desenha_forca(erros):
     print("  _______     ");
     print(" |/      |    ");
@@ -71,6 +75,7 @@ def desenha_forca(erros):
     print("_|___         ");
     print();
 
+#mensagem de vencedor
 def vencedor():
     print("Parabéns, você ganhou!");
     print("       ___________      ");
@@ -84,6 +89,7 @@ def vencedor():
     print("         _.' '._        ");
     print("        '-------'       ");
 
+#mensagem de perdedor
 def perdedor(palavra_secreta):
     print("Puxa, você foi enforcado!");
     print("A palavra era {}".format(palavra_secreta));
@@ -105,23 +111,23 @@ def perdedor(palavra_secreta):
     print("       \_______/            ");
 
 abertura()
-palavra_secreta = carrega_palavra_secreta()
-letras_acertadas = ["_" for letra in palavra_secreta];
-print(letras_acertadas)
-enforcou = False
-acertou = False
-erros = 0
+palavra_secreta = carrega_palavra();
+letras_acertadas = ["_" for letra in palavra_secreta];#coloca um "_" a cada letra da palavra secreta
+print(letras_acertadas);
+enforcou = False;
+acertou = False;
+erros = 0;
 while(not enforcou and not acertou):
-    chute = pede_chute()
+    chute = pede_chute();
     if(chute in palavra_secreta):
-        marca_chute(chute, letras_acertadas, palavra_secreta)
+        marca_chute(chute, letras_acertadas, palavra_secreta);
     else:
-        erros += 1
-        desenha_forca(erros)
-    enforcou = erros == 7
-    acertou = "_" not in letras_acertadas
-    print(letras_acertadas)
+        erros += 1;
+        desenha_forca(erros);
+    enforcou = erros == 7;
+    acertou = "_" not in letras_acertadas;
+    print(letras_acertadas);
 if(acertou):
-    vencedor()
+    vencedor();
 else:
-    perdedor(palavra_secreta)
+    perdedor(palavra_secreta);
